@@ -1,0 +1,66 @@
+<div (click)="onViewClick(repository.repoId)" class="card cursor-pointer bg-base-300 min-h-44 h-full w-96 focus:ring-4 shadow-lg transform active:scale-90 transition-transform hover:shadow-slate-300" >
+    <div class="card-body">
+      <h2 class="card-title">{{ repository.name }}</h2>
+      <p class="">
+        {{ repository.description || 'No description available' }}
+      </p>
+    </div>
+  </div>
+  
+  <dialog #myModal class="modal">
+    <div class="modal-box card p-6 ">
+      <div *ngIf="!selectedRepository; else content" class="flex justify-center items-center h-[300px]">
+        <span class="loading loading-infinity loading-lg"></span>
+      </div>
+      
+      <ng-template #content>
+        <div class="flex justify-between items-center">
+          <p class="text-sm text-gray-500">Repo ID: {{repository.repoId}}</p>
+          <button class="btn btn-sm btn-circle btn-primary" (click)="closeModal()">✕</button>
+        </div>
+        <h3 class="card-title text-2xl font-semibold mb-4">{{repository.name}}</h3>
+  
+        <div class="mb-4">
+          <p class="text-gray-700">
+            <span class="font-semibold">Description:</span> {{repository.description || 'No description available.'}}
+          </p>
+        </div>
+  
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="stats shadow">
+            <div class="stat">
+              <div class="stat-title">Stars</div>
+              <div class="stat-value">{{selectedRepository?.stargazers_count}}</div>
+            </div>
+          </div>
+          <div class="stats shadow">
+            <div class="stat">
+              <div class="stat-title">Forks</div>
+              <div class="stat-value">{{selectedRepository?.forks}}</div>
+            </div>
+          </div>
+  
+          <p class="text-gray-700 col-span-2">
+            <span class="font-semibold">Languages: </span>
+            <ng-container *ngIf="selectedRepository?.languages?.length; else noLanguages">
+              <span *ngFor="let language of selectedRepository?.languages" class="badge badge-primary mx-1">
+                {{language}}
+              </span>
+            </ng-container>
+            <ng-template #noLanguages><span>No languages available.</span></ng-template>
+          </p>
+  
+          <p class="text-gray-700 col-span-2">
+            <span class="font-semibold">Topics: </span>
+            <ng-container *ngIf="selectedRepository?.topics?.length; else noTopics">
+              <span *ngFor="let topic of selectedRepository?.topics" class="badge badge-secondary mx-1">
+                {{topic}}
+              </span>
+            </ng-container>
+            <ng-template #noTopics><span>No topics available.</span></ng-template>
+          </p>
+        </div>
+      </ng-template>
+    </div>
+    <form (click)="closeModal()" method="dialog" class="modal-backdrop"></form>
+  </dialog>
