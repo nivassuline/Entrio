@@ -1,0 +1,14 @@
+<app-header
+(onRepositorySearch)="onRepositorySearch($event)"
+></app-header>
+
+<div class="p-5 h-screen">
+  <app-body
+  [title]="title"
+  [repositoryCollection]="repositoryCollection"
+  [repositoriesLoading]="repositoriesLoading"
+  [perPage]="perPage"
+  (pageChange)="onPageChange($event)">
+  >
+  ></app-body>  
+</div>
